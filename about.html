@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Why Write to Your Future Self?</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <header>
+    <h1>💭 Why lose all of this aura?</h1>
+    <p class="subtitle">A message from your past can be a gift(a sad but still) to your future.</p>
+  </header>
+
+  <main class="about-grid">
+    <section class="about-text">
+      <h2>The Idea</h2>
+      <p>Life moves fast, and sometimes we forget how far we've come. Writing to your future self is a quiet way of saying:</p>
+      <ul>
+        <li>🌱 “I’m growing.”</li>
+        <li>✨ “I believe in you.”</li>
+        <li>📆 “Here’s what matters today.”</li>
+      </ul>
+
+      <h2>What You Can Write</h2>
+      <p>Anything! Hopes, jokes, a dream, puns, code, something embarrassing — even what you had for lunch. What feels small now might feel huge later.</p>
+
+      <button onclick="showRandomTip()">🎲 Give Me a Writing Tip</button>
+      <div id="tipBox" class="tip-box">Click the button for a tip!</div>
+
+      <p><a href="index.html">← Go back and write yours</a></p>
+    </section>
+
+    <section class="about-image">
+      <img src="letter.png" alt="Letter illustration" />
+      <figcaption class="img-caption">"To: Future Me" — Simple but powerful.</figcaption>
+    </section>
+  </main>
+
+  <script>
+    const tips = [
+      "Start with 'Dear Future Me' — it helps your brain open up.",
+      "Write about what you’re proud of today.",
+      "Ask yourself a question you’d love to answer later.",
+      "Don’t overthink it — write like you’re talking to a friend.",
+      "Include something silly. Future you needs to smile!"
+    ];
+
+    function showRandomTip() {
+      const randomIndex = Math.floor(Math.random() * tips.length);
+      const spreadTips = [...tips]; // using spread syntax
+      document.getElementById("tipBox").textContent = spreadTips[randomIndex];
+    }
+  </script>
+</body>
+</html>

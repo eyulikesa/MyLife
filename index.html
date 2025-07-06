@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Future You Mail</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <header>
+    <h1>📬 Yo, dawg!!! Write a Letter to Your Future Self</h1>
+    <p class="subtitle">Reflect. Write. Smile(but not too much). You’re doing better than you think.(lame, my mom made me put this in)</p>
+  </header>
+
+  <main class="container">
+    <section class="form-section">
+      <form id="letterForm">
+        <label for="name">Your Name:</label>
+        <input type="text" id="name" placeholder="Dear Me..."/>
+
+        <label for="letter">Your Letter:</label>
+        <textarea id="letter" rows="8" placeholder="Write something your future self would love to read..."></textarea>
+
+        
+      </form>
+    </section>
+
+    <section class="preview-section">
+      <h2>📝 Live Preview</h2>
+      <div id="previewBox" class="preview-box">
+        <p><strong>Name:</strong> <span id="previewName">---</span></p>
+        <p><strong>Letter:</strong></p>
+        <p id="previewLetter">---</p>
+<button type="button" onclick="saveLetter()">💾 Save as TXT</button>
+<button type="button" onclick="saveAsPDF()">📄 Save as PDF</button>
+
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <a href="about.html">Why write to yourself? →</a>
+  </footer>
+
+  <img src="letter.png" alt="Letter to Self" class="bg-image" />
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+
+  <script>
+    const nameInput = document.getElementById("name");
+    const letterInput = document.getElementById("letter");
+
+    const previewName = document.getElementById("previewName");
+    const previewLetter = document.getElementById("previewLetter");
+
+    // Use spread to clone values into new object
+    function updatePreview() {
+      const userInput = {
+        name: nameInput.value,
+        letter: letterInput.value,
+      };
+
+      const updated = { ...userInput }; // JavaScript spread used here
+      previewName.textContent = updated.name || "---";
+      previewLetter.textContent = updated.letter || "---";
+    }
+
+    nameInput.addEventListener("input", updatePreview);
+    letterInput.addEventListener("input", updatePreview);
+
+    function saveLetter() {
+      const content = `Dear ${nameInput.value || "Me"},\n\n${letterInput.value}`;
+      const blob = new Blob([content], { type: "text/plain" });
+      const a = document.createElement("a");
+      a.href = URL.createObjectURL(blob);
+      a.download = "Future-You-Letter.txt";
+      a.click();
+    }
+  </script>
+<script>
+  // PDF
+  function saveAsPDF() {
+    const doc = new window.jspdf.jsPDF();
+
+    const name = document.getElementById("name").value || "Me";
+    const letter = document.getElementById("letter").value || "";
+
+    doc.setFontSize(16);
+    doc.text(`Dear ${name},`, 10, 20);
+    doc.setFontSize(12);
+
+    const lines = doc.splitTextToSize(letter, 180);
+    doc.text(lines, 10, 30);
+
+    doc.save("Future-You-Letter.pdf");
+  }
+
+  // IMAGE
+  function saveAsImage() {
+    const preview = document.getElementById("previewBox");
+    html2canvas(preview).then(canvas => {
+      const a = document.createElement("a");
+      a.href = canvas.toDataURL("image/png");
+      a.download = "Future-You-Letter.png";
+      a.click();
+    });
+  }
+</script>
+</body>
+</html>
